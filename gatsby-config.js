@@ -1,6 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: "Long Walk",
+    title: 'The Alright Gatsby',
+    description: "Marie's Gatsby starting point.",
   },
-  plugins: ["gatsby-plugin-sass"],
+  plugins: [
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sass'
+  ],
 };

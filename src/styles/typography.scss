@@ -1,0 +1,93 @@
+html {
+  font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--black);
+}
+
+/**
+See here: https://www.gatsbyjs.com/docs/recipes/styling-css/#adding-a-local-font
+
+TODO: google fonts don't do .woofs, downloaded the .woof files from fontsource github repo (https://github.com/fontsource/fontsource/tree/master/packages/catamaran/files). Maybe better to use fontsource package (quicker to switch fonts)? but import from node_module packages didn't work for me first time...
+*/
+@font-face {
+  font-family: 'Catamaran';
+  src: url('../fonts/catamaran-all-700-normal.woff');
+}
+
+p,
+li {
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hZero,
+.hMinus1,
+.hMinus2,
+.hMinus3,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin: 0;
+  font-family: 'Catamaran', sans-serif;
+  font-weight: 700;
+}
+
+a {
+  color: var(--linkColor);
+  font-weight: 500;
+  text-decoration-color: var(--linkColor);
+  &:hover {
+    color: var(--black);
+  }
+}
+
+.hMinus3 {
+  font-size: var(--hMinus3);
+}
+.hMinus2 {
+  font-size: var(--hMinus2);
+}
+.hMinus1 {
+  font-size: var(--hMinus1);
+}
+.hZero {
+  font-size: var(--h0);
+}
+h1,
+.h1 {
+  font-size: var(--h1);
+}
+
+h2,
+.h2 {
+  font-size: var(--h2);
+}
+
+h3,
+.h3 {
+  font-size: var(--h3);
+}
+
+h4,
+.h4 {
+  font-size: var(--h4);
+}
+
+h5,
+.h5 {
+  font-size: var(--h5);
+}
+
+small,
+.text_small {
+  font-size: --small;
+}
