@@ -1,13 +1,13 @@
 # Alright Gatsby
 
-Gatsby starting point for cloning. Has boring stuff set up. No source-plugins - fetches data from REST (buildtime) & GraphQL(runtime) APIs.
+Very basic Gatsby starting point for cloning. Has boring stuff set up. No source-plugins - fetches data from REST (buildtime) & GraphQL(runtime) APIs.
 
 ## Plugins
 * react-helmet
 * sass
 
 ## Style
-* normalize.css
+* uses normalize.css
 * basic global styles
 * uses system fonts, custom font for headings
 * uses scss modules

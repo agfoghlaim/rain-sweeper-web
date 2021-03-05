@@ -15,12 +15,11 @@ export default function Activity(props) {
             rel="noopener noreferrer"
             href={attractions.url}
             title={attractions.name}
-          ></a>
+          >{attractions.name}</a>
         ) : (
           attractions.name
         )}
       </p>
-      <p>{attractions.name}</p>
       <p>
         <span role="img" aria-hidden="true">
           🗺️
