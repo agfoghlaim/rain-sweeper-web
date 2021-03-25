@@ -14,11 +14,10 @@ export default function WetTile({
   setNumLives,
   classes,
   handleKeyboard,
-  empty
+  empty,
 }) {
   const { date, culprit } = itemData;
   function localHandlePress(e) {
-  
     if (gameOver) return;
 
     // Right Click | just set flag.
@@ -32,8 +31,8 @@ export default function WetTile({
     }
     // don't do anything for left click if tile is flagged.
     else if (e.type === 'click') {
-      if(flagged) return;
-   
+      if (flagged) return;
+
       // if there are lives (umbrellas) left, decrement, flag & return.
       let currentLives = numLives;
       if (currentLives > 0) {
@@ -42,9 +41,9 @@ export default function WetTile({
         setFlagged(true);
         return;
       }
-    
-    // if left click & no lives left
-    handleWetClick(itemData);
+
+      // if left click & no lives left
+      handleWetClick(itemData);
     }
   }
 
@@ -60,6 +59,19 @@ export default function WetTile({
       return;
     }
     if (e.key === 'Enter') {
+      // handleWetClick(itemData, e);
+      if (flagged) return;
+
+      // if there are lives (umbrellas) left, decrement, flag & return.
+      let currentLives = numLives;
+      if (currentLives > 0) {
+        const update = currentLives - 1;
+        setNumLives(update);
+        setFlagged(true);
+        return;
+      }
+
+      // if left click & no lives left
       handleWetClick(itemData, e);
     }
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
@@ -80,15 +92,13 @@ export default function WetTile({
       onKeyDown={(e) => localHandleKeyboard(e)}
       id={itemData.id}
     >
-      {
-        !empty && (
-          <>
+      {!empty && (
+        <>
           <span className={classes.date}>{date}</span>
           {flagged && !gameOver && <Umbrella />}
           {gameOver && <span>🌧️</span>}
-          </>
-        )
-      }
+        </>
+      )}
     </div>
   );
 }
