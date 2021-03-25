@@ -62,7 +62,7 @@ export default function DryTile({
       id={itemData.id}
       onClick={localHandlePress}
       onContextMenu={localHandlePress}
-      tabIndex={itemData.i === 0 ? '0' : '-1'}
+      tabIndex={itemData.id === 0 ? '0' : '-1'}
       className={`${classes.tile} ${
         itemData.checked ? classes['checked'] : ''
       }`}

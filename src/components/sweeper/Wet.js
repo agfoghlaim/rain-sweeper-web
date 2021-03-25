@@ -59,7 +59,6 @@ export default function WetTile({
       return;
     }
     if (e.key === 'Enter') {
-      // handleWetClick(itemData, e);
       if (flagged) return;
 
       // if there are lives (umbrellas) left, decrement, flag & return.
