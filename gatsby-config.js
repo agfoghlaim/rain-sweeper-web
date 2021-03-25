@@ -1,7 +1,11 @@
 module.exports = {
+  // flags: {
+  //   DEV_SSR: true,
+  // },
   siteMetadata: {
-    title: 'The Alright Gatsby',
-    description: "Marie's Gatsby starting point.",
+    title: 'Rain Sweeper',
+    description: "Galway RainSweeper game",
+    author: 'Marie'
   },
   plugins: [
     'gatsby-plugin-react-helmet',

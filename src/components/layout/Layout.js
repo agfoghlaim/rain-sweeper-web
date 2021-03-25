@@ -3,10 +3,10 @@ import { useStaticQuery, graphql } from 'gatsby';
 
 import classes from './layout.module.scss';
 import 'normalize.css';
-import '../styles/global.scss';
-import '../styles/typography.scss';
+import '../../styles/global.scss';
+import '../../styles/typography.scss';
 
-import Nav from './Nav';
+import Nav from '../nav/Nav';
 
 function Layout({ children }) {
 
