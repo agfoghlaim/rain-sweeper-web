@@ -1,0 +1,44 @@
+.splash {
+  background: var(--black);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 9;
+  display: grid;
+  justify-content: center;
+  grid-auto-flow: row;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  padding: 20;
+  opacity: 0;
+  animation-name: fade;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+.text1 {
+  color: var(--white);
+  font-size: var(--h3);
+  font-weight: bold;
+}
+.text2 {
+  color: var(--yellow);
+  font-size: var(--h5);
+  font-weight: bold;
+}
+.emoji {
+  font-size: var(--h2);
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

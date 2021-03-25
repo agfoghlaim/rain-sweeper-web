@@ -17,9 +17,9 @@ export default function DryTile({
 }) {
   const { checked, date, numNastyNeighbours } = itemData;
   function localHandlePress(e) {
-    if (gameOver) return;
+    if (gameOver ) return;
     if (checked) return;
-    console.log(e.type, e)
+  
     e.preventDefault();
 
  
@@ -29,7 +29,13 @@ export default function DryTile({
       if (gameOver) return;
       setFlagged(!flagged);
       return;
-    } else {
+    } 
+    else if(e.type === 'click' && flagged){
+      return;
+    
+    // for left click on non flagged tile.
+    }else {
+      
       handleDryClick(itemData);
     }
 

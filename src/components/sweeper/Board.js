@@ -380,8 +380,8 @@ export default function Board() {
         <Splash
           win={win}
           roll={realData.roll}
-          rain={realData.data[realData.culprit].rain}
-          date={realData.data[realData.culprit].date}
+          rain={realData?.data[realData.culprit]?.rain }
+          date={realData?.data[realData.culprit]?.date}
         />
       )}
 

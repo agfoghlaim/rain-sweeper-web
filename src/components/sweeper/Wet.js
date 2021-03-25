@@ -15,24 +15,25 @@ export default function WetTile({
   classes,
   handleKeyboard,
 }) {
-
   const { date, culprit } = itemData;
   function localHandlePress(e) {
+  
     if (gameOver) return;
-    console.log(e.type)
-    // if(e.type === 'click') {
 
-     
-    // }
     // Right Click | just set flag.
     if (e.type === 'contextmenu') {
       e.preventDefault();
       if (gameOver) return;
       setFlagged(!flagged);
       return;
-    } else { // click
 
-      // if lives (umbrellas) left, decrement.
+      // Left Click
+    }
+    // don't do anything for left click if tile is flagged.
+    else if (e.type === 'click') {
+      if(flagged) return;
+   
+      // if there are lives (umbrellas) left, decrement, flag & return.
       let currentLives = numLives;
       if (currentLives > 0) {
         const update = currentLives - 1;
@@ -40,8 +41,9 @@ export default function WetTile({
         setFlagged(true);
         return;
       }
-      // if no lives left...?
-      handleWetClick(itemData);
+    
+    // if left click & no lives left
+    handleWetClick(itemData);
     }
   }
 
