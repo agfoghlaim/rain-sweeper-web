@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-
+import classes from './tile.module.scss';
 import WetTile from './Wet';
 import DryTile from './Dry';
 
@@ -12,7 +12,7 @@ export default function Tile({
   handleKeyboard,
   numLives,
   setNumLives,
-  classes,
+  // classes,
   setTheFocus,
   empty
 }) {

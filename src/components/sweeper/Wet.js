@@ -74,7 +74,7 @@ export default function WetTile({
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
-      className={classes.wetTile}
+      className={`${classes.tile}`}
       onClick={localHandlePress}
       onContextMenu={localHandlePress}
       onKeyDown={(e) => localHandleKeyboard(e)}

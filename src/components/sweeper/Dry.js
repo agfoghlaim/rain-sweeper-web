@@ -60,11 +60,10 @@ export default function DryTile({
         backgroundColor: checked ? `${colors.gray}` : `${colors.white}`,
       }}
       id={itemData.id}
-      className={classes.dryTile}
       onClick={localHandlePress}
       onContextMenu={localHandlePress}
       tabIndex={itemData.i === 0 ? '0' : '-1'}
-      className={`${classes.drySquare} ${
+      className={`${classes.tile} ${
         itemData.checked ? classes['checked'] : ''
       }`}
       onKeyDown={(e) => localHandleKeyboard(e)}
@@ -73,7 +72,7 @@ export default function DryTile({
         <>
           <div className={classes.date}>{date}</div>
 
-          {checked && <Nasties numNastyNeighbours={numNastyNeighbours} />}
+          {checked && <Nasties classes={classes} numNastyNeighbours={numNastyNeighbours} />}
 
           {flagged && !checked && !gameOver && <Umbrella />}
           {/* {flagged && !checked && !gameOver && <p>umb</p>}  */}

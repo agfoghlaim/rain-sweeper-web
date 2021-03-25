@@ -353,7 +353,7 @@ export default function Board() {
           key={d.id}
           data={d}
           empty={empty}
-          classes={classes}
+          // classes={classes}
           handleWetClick={handleWetClick}
           handleDryClick={handleDryClick}
           gameOver={gameOver}
