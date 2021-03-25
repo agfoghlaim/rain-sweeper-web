@@ -9,7 +9,7 @@ export function shuffleArray(a) {
 }
 
 export async function prepData(winnable) {
-console.log("called")
+
   const  {wet, dry} = winnable;
   // Concat wet/dry arrays @ 5:1 (dry:wet) ratio.
   const winnableData = dry.nodes.slice(0, 1000).concat(wet.nodes.slice(0, 200));
@@ -122,9 +122,9 @@ export function getNeighbourToThe(i, direction) {
 }
 
 export function formatDates(arr) {
-  console.log("date", arr)
+
   return arr.map((item) => {
-    console.log(item.date)
+
     item.date = sweeperDate(item.date);
     return item;
   });
@@ -184,7 +184,7 @@ function sweeperDate(string) {
   const d = new Date(string);
   const year = d.getFullYear().toString().substring(2, 4); // "19"
   const month = d.toLocaleString('default', { month: 'long' }).substring(0, 3); // "Jan"
-  console.log(d.toLocaleString('default', { month: 'long' }))
+
   const day = d.getDate();
   return `${day} ${month} '${year}`;
 }

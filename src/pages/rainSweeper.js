@@ -16,8 +16,7 @@ export default function RainSweeperPage({ data }) {
           <span>Data from Athenry weather station</span>
         </h1>
         <Board  />
-        {/* <Test /> */}
-   
+     
       </main>
     </>
   );

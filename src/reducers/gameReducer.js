@@ -8,7 +8,7 @@ import {
 export default function gameReducer(state, action) {
   switch (action.type) {
     case 'FETCH':
-      console.log("fetch", action.payload.allData)
+
       return {
         loading: false,
         error: '',

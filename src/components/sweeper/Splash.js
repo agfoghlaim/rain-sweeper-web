@@ -2,7 +2,12 @@ import React from 'react';
 
 import { colors } from '../../consts';
 
-export default function Splash({ win, numWet, rain, date, roll }) {
+export default function Splash({ win, numWet, rain, date, roll, setShowSplash, setNewGame }) {
+
+  function localHandleDismissSplash() {
+    setShowSplash(false);
+    setNewGame(true);
+  }
    let msg = '';
    if( roll === 4) {
   
@@ -17,6 +22,7 @@ export default function Splash({ win, numWet, rain, date, roll }) {
     <div style={styles.splash}>
       <span style={styles.emoji}>{msg === '' ? '😎' : msg}</span>
       <span style={styles.text2}>You avoided {numWet} rainy days</span>
+      <button onClick={localHandleDismissSplash}>Keep Going!</button>
       
     </div>
   ) : (
@@ -34,10 +40,15 @@ const styles = {
   splash: {
     backgroundColor: colors.black,
     height: '100%',
+    width: '100%',
     // width: Dimensions.get('window').width,
     position: 'absolute',
     zIndex: 9,
+    display: 'grid',
     justifyContent: 'center',
+    gridAutoFlow: 'row',
+    justifyItems: 'center',
+    alignContent: 'center',
     alignItems: 'center',
     padding: 20,
   },

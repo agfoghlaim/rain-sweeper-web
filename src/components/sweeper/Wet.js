@@ -19,21 +19,28 @@ export default function WetTile({
   const { date, culprit } = itemData;
   function localHandlePress(e) {
     if (gameOver) return;
-    let currentLives = numLives;
-    if (currentLives > 0) {
-      const update = currentLives - 1;
-      setNumLives(update);
-      setFlagged(true);
-      return;
-    }
+    console.log(e.type)
+    // if(e.type === 'click') {
+
+     
+    // }
     // Right Click | just set flag.
     if (e.type === 'contextmenu') {
       e.preventDefault();
       if (gameOver) return;
       setFlagged(!flagged);
       return;
-    } else {
-    
+    } else { // click
+
+      // if lives (umbrellas) left, decrement.
+      let currentLives = numLives;
+      if (currentLives > 0) {
+        const update = currentLives - 1;
+        setNumLives(update);
+        setFlagged(true);
+        return;
+      }
+      // if no lives left...?
       handleWetClick(itemData);
     }
   }

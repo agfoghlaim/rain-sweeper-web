@@ -57,8 +57,6 @@ export default function Board() {
     `
   );
 
-  console.log("first one is ", winnable)
-
   /**
    *
    * When a <Dry> day is clicked, it's tricky to check neighbouring days and manage re-renders. Push all neighbours to be checked/revealed in here and update state all at once.
@@ -87,10 +85,8 @@ export default function Board() {
   const skipRef = useRef(null);
   const go = useCallback(async function load() {
     try {
-      console.log('winnablessss', winnable);
+
       const allData = await prepData(winnable);
-      // console.log('winn', winnable);
-      // console.log('have it?', allData);
       dispatch({ type: 'FETCH', error: '', payload: allData });
     } catch (err) {
       console.log(err);
@@ -129,9 +125,9 @@ export default function Board() {
     }
   }, [newGame, setNumWet, realData.data]);
 
-  // timeout to hide splash set in handle lose game
+  // timeout to hide splash set in handle LOSE game
   useEffect(() => {
-    if (!showSplash) return;
+    if (!showSplash || win) return;
 
     // Remove you lost splash after 2 seconds.
     splashTimer.current = setTimeout(() => setShowSplash(false), 3000);
@@ -174,9 +170,9 @@ export default function Board() {
       setShowSplash(true);
 
       // 3. Set timesout to remove splash.
-      splashTimer.current = setTimeout(() => {
-        setShowSplash(false);
-      }, 1500);
+      // splashTimer.current = setTimeout(() => {
+      //   setShowSplash(false);
+      // }, 1500);
 
       // 4. get one spare umbrella on fifth round
       if (roll === 4) {
@@ -243,9 +239,9 @@ export default function Board() {
     return {
       down: () => {
         const swichFocusTo = document.getElementById(current + NUM_DAYS_IN_ROW);
-        console.log("switch to ", swichFocusTo)
+        console.log('switch to ', swichFocusTo);
         if (!swichFocusTo) return;
-        console.log("didnt ree", swichFocusTo)
+        console.log('didnt ree', swichFocusTo);
         swichFocusTo.focus();
       },
       up: () => {
@@ -372,7 +368,13 @@ export default function Board() {
   return (
     <div className={classes.gameWrap}>
       {showSplash && win && (
-        <Splash numWet={numWet} win={win} roll={realData.roll} />
+        <Splash
+          numWet={numWet}
+          win={win}
+          roll={realData.roll}
+          setShowSplash={setShowSplash}
+          setNewGame={setNewGame}
+        />
       )}
       {showSplash && !win && (
         <Splash
@@ -394,7 +396,6 @@ export default function Board() {
         error={realData.error}
         loading={realData.loading}
       />
-   
 
       <div
         tabIndex="0"
@@ -414,4 +415,3 @@ export default function Board() {
     </div>
   );
 }
-
