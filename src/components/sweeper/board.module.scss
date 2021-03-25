@@ -8,6 +8,11 @@
   position: relative;
   grid-gap: 0.2rem;
   min-height: calc(3.6rem * 8);
+
+  // min-height: 100vh;
+   align-items: flex-start;
+  align-content: flex-start;
+
 }
 .tileGrid {
   display: grid;

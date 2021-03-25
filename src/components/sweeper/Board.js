@@ -343,15 +343,16 @@ export default function Board() {
   }
   //#endregion handlers
 
-  function renderTiles() {
+  function renderTiles(empty) {
     const data = realData.data.slice(0, NUM_DAYS_IN_GAME);
 
     return data.map((d, i) => {
       return (
         <Tile
-          key={d.date}
+          
           key={d.id}
           data={d}
+          empty={empty}
           classes={classes}
           handleWetClick={handleWetClick}
           handleDryClick={handleDryClick}
@@ -410,7 +411,7 @@ export default function Board() {
           <Error msg={realData.error} tryAgain={tryAgain} />
         ) : realData.loading ? (
           <Loading />
-        ) : null}
+        ) : renderTiles(true)}
       </div>
     </div>
   );

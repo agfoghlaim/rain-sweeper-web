@@ -9,11 +9,6 @@ function Nav() {
         <li>
           <Link to="/">Home</Link>{' '}
         </li>
-
-       <li>
-          <Link to="/attractions">Attractions</Link>
-        </li> 
-
       </ul>
     </nav>
   );

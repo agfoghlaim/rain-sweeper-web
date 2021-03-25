@@ -13,7 +13,8 @@ export default function Tile({
   numLives,
   setNumLives,
   classes,
-  setTheFocus
+  setTheFocus,
+  empty
 }) {
 
   // TODO: maybe these should stay here?
@@ -35,6 +36,7 @@ export default function Tile({
     classes={classes}
     setTheFocus={setTheFocus}
     handleKeyboard={handleKeyboard}
+    empty={empty}
 
     />
   ) : (
@@ -50,6 +52,7 @@ export default function Tile({
       classes={classes}
       setTheFocus={setTheFocus}
       handleKeyboard={handleKeyboard}
+      empty={empty}
     />
   );
 

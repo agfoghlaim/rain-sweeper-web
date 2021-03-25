@@ -1,5 +1,20 @@
 .layout {
 	display: grid;
-	padding: 2rem;
+	min-height: 100vh;
+	header {
+		padding: 1rem 2rem;
+		height: 2rem;
+		background: var(--black);
+	}
+	footer {
+		background: var(--black);
+		color: var(--white);
+		height: 2rem;
+		display: grid;
+		align-content: center;
+		justify-content: center;
+		font-size: var(--small);
+		font-weight: 700;
 
+	}
 }

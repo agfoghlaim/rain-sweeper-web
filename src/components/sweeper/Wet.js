@@ -14,6 +14,7 @@ export default function WetTile({
   setNumLives,
   classes,
   handleKeyboard,
+  empty
 }) {
   const { date, culprit } = itemData;
   function localHandlePress(e) {
@@ -78,13 +79,16 @@ export default function WetTile({
       onContextMenu={localHandlePress}
       onKeyDown={(e) => localHandleKeyboard(e)}
       id={itemData.id}
-      // onLongPress={handleLongPress}
     >
-      <>
-        <span className={classes.date}>{date}</span>
-        {flagged && !gameOver && <Umbrella />}
-        {gameOver && <span>🌧️</span>}
-      </>
+      {
+        !empty && (
+          <>
+          <span className={classes.date}>{date}</span>
+          {flagged && !gameOver && <Umbrella />}
+          {gameOver && <span>🌧️</span>}
+          </>
+        )
+      }
     </div>
   );
 }

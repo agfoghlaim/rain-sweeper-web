@@ -1,5 +1,5 @@
 .nav {
-	background: var(--grey);
+	// background: var(--grey);
 	display: grid;
 	align-items: center;
 	
@@ -13,6 +13,8 @@
 		li {
 			a {
 				text-decoration: none;
+				color: var(--white);
+				font-size: var(--h5);
 			}
 		}
 	}
