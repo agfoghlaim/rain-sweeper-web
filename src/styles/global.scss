@@ -13,6 +13,7 @@
 
   --orange: #ffa410;
   --purple: #703fb9;
+  --lightPurple: #a084ca;
   --red: #ff401a;
   --gray: #cac4b9;
   --green: #0c8f2c;
@@ -37,11 +38,15 @@
   --linkColor: var(--purple);
 }
 
+html {
+  font-size: 18px;
+}
 *,
 :before,
 :after {
   box-sizing: border-box;
 }
+
 
 body {
   font-size: 1rem;
@@ -68,4 +73,42 @@ button {
 
 img {
   max-width: 100%;
+}
+
+
+@media only screen and (max-width: 610px) {
+  html {
+    font-size: 16px;
+  }
+
+}
+@media only screen and (max-width: 545px) {
+  html {
+    font-size: 14px;
+  }
+
+}
+@media only screen and (max-width: 450px) {
+  html {
+    font-size: 13px;
+  }
+
+}
+@media only screen and (max-width: 420px) {
+  html {
+    font-size: 12px;
+  }
+
+}
+@media only screen and (max-width: 390px) {
+  html {
+    font-size: 11px;
+  }
+
+}
+@media only screen and (max-width: 350px) {
+  html {
+    font-size: 10px;
+  }
+
 }

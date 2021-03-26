@@ -50,7 +50,7 @@ export default function GameInfo({
   return (
     <div style={styles.gameInfo}>
       <span style={styles.score}>Score: {score}</span>
-      <span style={{ fontSize: 32 }}> {decideEmoji()}</span>
+      <span style={{ fontSize: '1.563rem' }}> {decideEmoji()}</span>
 
       {!gameOver ? (
         <>
@@ -82,14 +82,12 @@ const styles = {
   gameInfo: {
     display: 'grid',
     gridAutoFlow: 'column',
-    minHeight: 64,
-    padding: 16,
+    minHeight: '4rem',
     backgroundColor: 'var(--gray)',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     justifyContent: 'center',
     justifyItems: 'center',
     alignItems: 'center',
-    marginVertical: 16,
     borderRadius: '0.2rem',
     border: '2px inset var(--white)',
   },
@@ -97,17 +95,15 @@ const styles = {
     fontFamily: 'monospace',
     fontWeight: '700',
     padding: '0.2rem',
-    fontSize: 14,
+    fontSize: '1rem',
     color: 'var(--red)',
     backgroundColor: 'var(--white)',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
     borderRadius: '0.2rem',
   },
   round: {
     fontFamily: 'monospace',
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: '1rem',
     padding: '0.2rem',
     color: 'var(--white)',
     backgroundColor: 'var(--red)',
