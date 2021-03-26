@@ -23,7 +23,6 @@ import Loading from './Loading';
 import Error from './Error';
 
 import {
-  colors,
   NUM_DAYS_IN_ROW,
   NUM_DAYS_IN_GAME,
   DIRECTIONS,
@@ -85,7 +84,6 @@ export default function Board() {
   const skipRef = useRef(null);
   const go = useCallback(async function load() {
     try {
-
       const allData = await prepData(winnable);
       dispatch({ type: 'FETCH', error: '', payload: allData });
     } catch (err) {
@@ -239,9 +237,9 @@ export default function Board() {
     return {
       down: () => {
         const swichFocusTo = document.getElementById(current + NUM_DAYS_IN_ROW);
-        console.log('switch to ', swichFocusTo);
+
         if (!swichFocusTo) return;
-        console.log('didnt ree', swichFocusTo);
+
         swichFocusTo.focus();
       },
       up: () => {
@@ -263,12 +261,7 @@ export default function Board() {
   }
 
   function handleWetClick(data) {
-    // let currentLives = numLives;
-    // if(currentLives > 1 ) {
-    //   const update = currentLives - 1;
-    //   setNumLives(update);
-    //   return;
-    // }
+
     setGameOver(true);
 
     // Set which day done it.
@@ -349,7 +342,6 @@ export default function Board() {
     return data.map((d, i) => {
       return (
         <Tile
-          
           key={d.id}
           data={d}
           empty={empty}
@@ -381,7 +373,7 @@ export default function Board() {
         <Splash
           win={win}
           roll={realData.roll}
-          rain={realData?.data[realData.culprit]?.rain }
+          rain={realData?.data[realData.culprit]?.rain}
           date={realData?.data[realData.culprit]?.date}
         />
       )}
@@ -411,7 +403,9 @@ export default function Board() {
           <Error msg={realData.error} tryAgain={tryAgain} />
         ) : realData.loading ? (
           <Loading />
-        ) : renderTiles(true)}
+        ) : (
+          renderTiles(true)
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { colors } from '../../consts';
 
@@ -11,35 +11,31 @@ export default function GameInfo({
   roll,
   numLives,
   error,
-  loading,
+  loading
 }) {
-  // const initialScale = useState(new Animated.Value(1))[0];
+  const lives = useRef(numLives);
+  const [emoji, setEmoji] = useState('🤔')
+  useEffect(()=>{
+    if(numLives < lives.current){
+      setEmoji('🙄');
+      const timer = setTimeout(() => setEmoji('🤔'), 300);
 
-  // function drawAttentionToNextRoundButton() {
-  //   Animated.loop(
-  //     Animated.spring(initialScale, {
-  //       toValue: 1.02,
-  //       friction: 1,
-  //       tension: 1,
-  //       duration: 3000,
-  //       useNativeDriver: true,
-  //     })
-  //   ).start();
-  // }
-
-  // useEffect(() => {
-  //   if (!gameOver) return;
-
-  //   if (win) {
-  //     drawAttentionToNextRoundButton();
-  //   }
-  // }, [gameOver]);
+      // Clean up setTimeout.
+      return function cleanup() {
+        if (timer) {
+          clearTimeout(timer);
+       
+        }
+      };
+    }
+  },[numLives, lives]);
 
   function decideEmoji() {
     if (gameOver && typeof newGame === 'undefined') {
       return '😴';
     } else if (!gameOver && typeof newGame === 'boolean') {
-      return '🤔';
+      //return '🤔';
+      return emoji;
     } else if (win && gameOver && typeof newGame === 'boolean') {
       return '😀';
     } else if (
@@ -86,7 +82,6 @@ export default function GameInfo({
 
 const styles = {
   gameInfo: {
-    // flex: 1,
     display: 'grid',
     gridAutoFlow: 'column',
     minHeight: 64,
@@ -97,7 +92,8 @@ const styles = {
     justifyItems: 'center',
     alignItems: 'center',
     marginVertical: 16,
-    borderRadius: 4,
+    borderRadius: '0.2rem',
+    border: '2px inset var(--white)',
   },
   score: {
     fontFamily: 'monospace',
@@ -108,7 +104,7 @@ const styles = {
     backgroundColor: colors.white,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 4,
+    borderRadius: '0.2rem',
   },
   round: {
     fontFamily: 'monospace',
@@ -119,6 +115,6 @@ const styles = {
     backgroundColor: colors.red,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 4,
+    borderRadius: '0.2rem',
   },
 };

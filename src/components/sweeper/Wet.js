@@ -81,7 +81,7 @@ export default function WetTile({
   return (
     <div
       style={{
-        backgroundColor: culprit ? colors.red : colors.blue,
+        backgroundColor: culprit ? colors.red : 'var(--white)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
@@ -91,13 +91,13 @@ export default function WetTile({
       onKeyDown={(e) => localHandleKeyboard(e)}
       id={itemData.id}
     >
-      {!empty && (
+      {!empty ? (
         <>
           <span className={classes.date}>{date}</span>
           {flagged && !gameOver && <Umbrella />}
           {gameOver && <span>🌧️</span>}
         </>
-      )}
+      ) : <span style={{display: 'grid', alignSelf: 'center', justifySelf: 'center'}}>❔</span>}
     </div>
   );
 }

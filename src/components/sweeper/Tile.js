@@ -12,7 +12,6 @@ export default function Tile({
   handleKeyboard,
   numLives,
   setNumLives,
-  // classes,
   setTheFocus,
   empty
 }) {

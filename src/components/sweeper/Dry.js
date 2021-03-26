@@ -57,7 +57,7 @@ export default function DryTile({
   return (
     <div
       style={{
-        backgroundColor: checked ? `${colors.gray}` : `${colors.white}`,
+        backgroundColor: checked ? `${colors.gray}` : `var(--white)`,
       }}
       id={itemData.id}
       onClick={localHandlePress}
@@ -68,15 +68,30 @@ export default function DryTile({
       }`}
       onKeyDown={(e) => localHandleKeyboard(e)}
     >
-      {!empty && (
+      {!empty ? (
         <>
           <div className={classes.date}>{date}</div>
 
-          {checked && <Nasties classes={classes} numNastyNeighbours={numNastyNeighbours} />}
+          {checked && (
+            <Nasties
+              classes={classes}
+              numNastyNeighbours={numNastyNeighbours}
+            />
+          )}
 
           {flagged && !checked && !gameOver && <Umbrella />}
           {/* {flagged && !checked && !gameOver && <p>umb</p>}  */}
         </>
+      ) : (
+        <span
+          style={{
+            display: 'grid',
+            alignSelf: 'center',
+            justifySelf: 'center',
+          }}
+        >
+          ❔
+        </span>
       )}
     </div>
   );

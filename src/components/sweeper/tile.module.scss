@@ -9,7 +9,9 @@
   border: 0.1rem solid white;
   border-style: inset;
   background: var(--gray);
+  border-radius: 0.2rem;
   transition: none;
+  box-shadow: none;
 }
 .nasties {
   font-size: 1.2rem;
@@ -26,9 +28,27 @@
   justify-content: center;
   justify-items: center;
   grid-auto-flow: row;
-  transition: background 0.15s ease-out;
+  transition: all 0.15s ease-out;
   padding: 0.1rem;
   position: relative;
-  cursor: pointer;
+  border: 1px outset var(--white);
+}
+.tile:focus {
+  // outline: none;
+  // border: 2px solid var(--red);
 }
 
+// Remove browser default outline so there's no focus when using mouse.
+.tile:focus {
+  outline: none;
+}
+
+// For keyboard focus, use border.
+.tile:focus-visible {
+  border: 2px solid var(--lightBlack);
+}
+
+.tile.checked {
+  box-shadow: none;
+  border-style: inset;
+}
