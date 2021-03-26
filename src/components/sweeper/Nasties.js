@@ -1,17 +1,15 @@
-import React from 'react'
-
-import { colors } from '../../consts';
+import React from 'react';
 
 export default function Nasties({numNastyNeighbours, classes}){
 
 	const color = {
 		color: 	numNastyNeighbours === 0
-			? colors.orange
+			? 'var(--white)'
 			: numNastyNeighbours === 1
-			? colors.green
+			? 'var(--green)'
 			: numNastyNeighbours === 2
-			? colors.blue
-			: colors.red
+			? 'var(--blue)'
+			: 'var(--red)'
 	}
 	return(
 		<span className={classes.nasties} style={{...color}}>{numNastyNeighbours}</span>

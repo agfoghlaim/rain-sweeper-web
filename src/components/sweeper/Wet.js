@@ -2,8 +2,6 @@ import React from 'react';
 
 import Umbrella from './Umbrella';
 
-import { colors } from '../../consts';
-
 export default function WetTile({
   itemData,
   flagged,
@@ -81,7 +79,7 @@ export default function WetTile({
   return (
     <div
       style={{
-        backgroundColor: culprit ? colors.red : 'var(--white)',
+        backgroundColor: culprit ? 'var(--red)' : 'var(--white)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}

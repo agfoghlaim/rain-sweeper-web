@@ -1,8 +1,5 @@
 import React from 'react';
 
-
-import { colors } from '../../consts';
-
 export default function Error({ msg, tryAgain }) {
   return (
     <div style={styles.loadingWrap}>
@@ -28,7 +25,7 @@ const styles = {
   },
   text: {
     fontSize: 14,
-    color: colors.red,
+    color: 'var(--red)',
     marginVertical: 10,
 
     padding: 3,

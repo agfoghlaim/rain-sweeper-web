@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { colors } from '../../consts';
-
 import Nasties from './Nasties';
 import Umbrella from './Umbrella';
 
@@ -57,7 +55,7 @@ export default function DryTile({
   return (
     <div
       style={{
-        backgroundColor: checked ? `${colors.gray}` : `var(--white)`,
+        backgroundColor: checked ? `var(--gray)` : `var(--white)`,
       }}
       id={itemData.id}
       onClick={localHandlePress}

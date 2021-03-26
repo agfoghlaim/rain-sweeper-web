@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { colors } from '../../consts';
-
 export default function GameInfo({
   gameOver,
   newGame,
@@ -86,7 +84,7 @@ const styles = {
     gridAutoFlow: 'column',
     minHeight: 64,
     padding: 16,
-    backgroundColor: colors.gray,
+    backgroundColor: 'var(--gray)',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
     justifyContent: 'center',
     justifyItems: 'center',
@@ -100,8 +98,8 @@ const styles = {
     fontWeight: '700',
     padding: '0.2rem',
     fontSize: 14,
-    color: colors.red,
-    backgroundColor: colors.white,
+    color: 'var(--red)',
+    backgroundColor: 'var(--white)',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: '0.2rem',
@@ -111,8 +109,8 @@ const styles = {
     fontWeight: '700',
     fontSize: 14,
     padding: '0.2rem',
-    color: colors.white,
-    backgroundColor: colors.red,
+    color: 'var(--white)',
+    backgroundColor: 'var(--red)',
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: '0.2rem',
