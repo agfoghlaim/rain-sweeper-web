@@ -12,8 +12,10 @@ export default function DryTile({
   gameOver,
   classes,
   empty,
+  firstTileRef,
 }) {
   const { checked, date, numNastyNeighbours } = itemData;
+
   function localHandlePress(e) {
     if (gameOver) return;
     if (checked) return;
@@ -52,6 +54,7 @@ export default function DryTile({
     return;
   }
 
+
   return (
     <div
       style={{
@@ -59,6 +62,8 @@ export default function DryTile({
       }}
       id={itemData.id}
       onClick={localHandlePress}
+      // ref will be null unless itemData.id === 0
+      ref={firstTileRef}
       onContextMenu={localHandlePress}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
       className={`${classes.tile} ${

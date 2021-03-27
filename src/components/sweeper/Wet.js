@@ -13,6 +13,7 @@ export default function WetTile({
   classes,
   handleKeyboard,
   empty,
+  firstTileRef,
 }) {
   const { date, culprit } = itemData;
   function localHandlePress(e) {
@@ -76,6 +77,7 @@ export default function WetTile({
     }
     return;
   }
+
   return (
     <div
       style={{
@@ -84,6 +86,8 @@ export default function WetTile({
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
       className={`${classes.tile}`}
+      // ref will be null unless itemData.id === 0
+      ref={firstTileRef}
       onClick={localHandlePress}
       onContextMenu={localHandlePress}
       onKeyDown={(e) => localHandleKeyboard(e)}
@@ -95,7 +99,17 @@ export default function WetTile({
           {flagged && !gameOver && <Umbrella />}
           {gameOver && <span>🌧️</span>}
         </>
-      ) : <span style={{display: 'grid', alignSelf: 'center', justifySelf: 'center'}}>❔</span>}
+      ) : (
+        <span
+          style={{
+            display: 'grid',
+            alignSelf: 'center',
+            justifySelf: 'center',
+          }}
+        >
+          ❔
+        </span>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import classes from './tile.module.scss';
 import WetTile from './Wet';
@@ -12,34 +12,42 @@ export default function Tile({
   handleKeyboard,
   numLives,
   setNumLives,
-  setTheFocus,
-  empty
+  empty,
 }) {
 
-  // TODO: maybe these should stay here?
   const [flagged, setFlagged] = useState(false);
+  const firstTileRef = useRef(null);
 
   useEffect(() => {
     if (!gameOver) return;
     setFlagged(false);
   }, [gameOver, flagged]);
-  
-  return data.rain === 0  ? (
-		// <div>dry</div>
-    <DryTile
-    itemData={data}
-    handleDryClick={handleDryClick}
-    gameOver={gameOver}
-    setFlagged={setFlagged}
-    flagged={flagged}
-    classes={classes}
-    setTheFocus={setTheFocus}
-    handleKeyboard={handleKeyboard}
-    empty={empty}
 
+  // Focus the first tile when a new game loads.
+  useEffect(() => {
+    if (firstTileRef.current) {
+      firstTileRef.current.focus();
+    }
+  }, [firstTileRef.current]);
+
+
+  return data.rain === 0 ? (
+    <DryTile
+      itemData={data}
+      handleDryClick={handleDryClick}
+      gameOver={gameOver}
+      setFlagged={setFlagged}
+      flagged={flagged}
+      classes={classes}
+      handleKeyboard={handleKeyboard}
+      empty={empty}
+
+      /* So that the first tile is auto focused when 'New Game' button is pressed...'empty' represents the empty tiles on load before new game is pressed there's no need to autofocus in this case.
+      if not empty (ie. new Game button pressed) set the first tile on the board to firstTileRef. useEffect above will focus it.
+      */
+     firstTileRef={!empty && data.id === 0 ? firstTileRef : null}
     />
   ) : (
-
     <WetTile
       itemData={data}
       handleWetClick={handleWetClick}
@@ -49,10 +57,8 @@ export default function Tile({
       numLives={numLives}
       setNumLives={setNumLives}
       classes={classes}
-      setTheFocus={setTheFocus}
       handleKeyboard={handleKeyboard}
       empty={empty}
     />
   );
-
 }

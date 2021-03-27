@@ -66,6 +66,7 @@ export default function GameInfo({
         <>
         <span style={styles.umbrellas}></span>
         <button
+          id="0"
           disabled={Boolean(error) || loading}
           onClick={() => setNewGame(true)}
         >

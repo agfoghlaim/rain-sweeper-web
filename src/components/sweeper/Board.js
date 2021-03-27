@@ -22,11 +22,7 @@ import Splash from './Splash';
 import Loading from './Loading';
 import Error from './Error';
 
-import {
-  NUM_DAYS_IN_ROW,
-  NUM_DAYS_IN_GAME,
-  DIRECTIONS,
-} from '../../consts';
+import { NUM_DAYS_IN_ROW, NUM_DAYS_IN_GAME, DIRECTIONS } from '../../consts';
 
 import gameReducer from '../../reducers/gameReducer';
 
@@ -78,10 +74,13 @@ export default function Board() {
   const [gameOver, setGameOver] = useState(true);
   const [numLives, setNumLives] = useState(3); // it's reset anyway...
   const [win, setWin] = useState(undefined);
+  const [renderingTiles, setRenderingTiles] = useState(false);
   const [showSplash, setShowSplash] = useState(false);
   const splashTimer = useRef(null);
+  const firstTileRef = useRef(null);
+
   const [numWet, setNumWet] = useState(null);
-  const skipRef = useRef(null);
+  // const skipRef = useRef(null);
   const go = useCallback(async function load() {
     try {
       const allData = await prepData(winnable);
@@ -110,10 +109,11 @@ export default function Board() {
     if (!newGame) return;
     setGameOver(false); // okay?
     setWin(false);
+
     dispatch({ type: 'SHUFFLE', payload: realData.allData });
 
     setNewGame(false);
-  }, [newGame]);
+  }, [newGame, setWin]);
 
   // Get num wet days for score when newGame changes.
   useEffect(() => {
@@ -261,7 +261,6 @@ export default function Board() {
   }
 
   function handleWetClick(data) {
-
     setGameOver(true);
 
     // Set which day done it.
@@ -345,7 +344,6 @@ export default function Board() {
           key={d.id}
           data={d}
           empty={empty}
-          // classes={classes}
           handleWetClick={handleWetClick}
           handleDryClick={handleDryClick}
           gameOver={gameOver}
@@ -392,7 +390,7 @@ export default function Board() {
 
       <div
         tabIndex="0"
-        ref={skipRef}
+        // ref={skipRef}
         className={classes.tileGrid}
         style={{ gridTemplateColumns: `repeat(${NUM_DAYS_IN_ROW}, 3.6rem)` }}
       >

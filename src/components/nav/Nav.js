@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import classes from './nav.module.scss';
+
+import { Link } from 'gatsby';
 
 function Nav() {
   return (
@@ -15,6 +16,6 @@ function Nav() {
       </ul>
     </nav>
   );
-};
+}
 
 export default Nav;

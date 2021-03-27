@@ -2,9 +2,9 @@
  * Wrap all pages in <Layout>
  */
 
-import React from 'react';
-import Layout from './src/components/layout/Layout';
+// import React from 'react';
+// import Layout from './src/components/layout/Layout';
 
-export function wrapPageElement({ element, props }) {
-  return <Layout {...props}>{element}</Layout>;
-}
+// export function wrapPageElement({ element, props }) {
+//   return <Layout {...props}>{element}</Layout>;
+// }

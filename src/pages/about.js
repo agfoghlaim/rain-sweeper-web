@@ -1,11 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import SEO from '../components/SEO';
 import classes from './about.module.scss';
+
+import Layout from '../components/layout/Layout';
+import SEO from '../components/SEO';
 
 function AboutPage({ data }) {
   return (
-    <>
+    <Layout>
       <SEO pageTitle="About" />
       <main className={classes.aboutMain}>
         <h1>About Galway RainSweeper</h1>
@@ -25,7 +27,7 @@ function AboutPage({ data }) {
           collect.
         </p>
       </main>
-    </>
+    </Layout>
   );
 }
 
