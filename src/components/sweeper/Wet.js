@@ -81,11 +81,12 @@ export default function WetTile({
   return (
     <div
       style={{
-        backgroundColor: culprit ? 'var(--red)' : 'var(--white)',
+        backgroundColor: culprit ? 'var(--red)' : 'var(--red)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
       className={`${classes.tile}`}
+      role="button"
       // ref will be null unless itemData.id === 0
       ref={firstTileRef}
       onClick={localHandlePress}
@@ -97,7 +98,7 @@ export default function WetTile({
         <>
           <span className={classes.date}>{date}</span>
           {flagged && !gameOver && <Umbrella />}
-          {gameOver && <span>🌧️</span>}
+          {gameOver && <span role="img" aria-label="cloud with rain">🌧️</span>}
         </>
       ) : (
         <span
@@ -106,6 +107,8 @@ export default function WetTile({
             alignSelf: 'center',
             justifySelf: 'center',
           }}
+          role="img"
+          aria-label="questionmark"
         >
           ❔
         </span>

@@ -2,7 +2,7 @@
   font-family: monospace;
   margin: 1rem 3rem 1rem 3rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   justify-content: flex-start;
   grid-gap: 1rem;
 
@@ -15,9 +15,11 @@
     grid-auto-flow: column;
 		align-items: center;
     align-content: center;
+    justify-content: center;
     .text {
       color: var(--white);
       font-size: 10px;
+      white-space: nowrap;
     }
     .emoji {
       color: var(--white);

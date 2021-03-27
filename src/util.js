@@ -188,3 +188,46 @@ function sweeperDate(string) {
   const day = d.getDate();
   return `${day} ${month} '${year}`;
 }
+
+export function handleKeyboard(_, e) {
+  e.preventDefault();
+  if (e.key === 'ArrowDown') {
+    setTheFocus(+document.activeElement.id).down();
+  }
+  if (e.key === 'ArrowUp') {
+    setTheFocus(+document.activeElement.id).up();
+  }
+  if (e.key === 'ArrowRight') {
+    setTheFocus(+document.activeElement.id).right();
+  }
+  if (e.key === 'ArrowLeft') {
+    setTheFocus(+document.activeElement.id).left();
+  }
+}
+
+export function setTheFocus(current) {
+  return {
+    down: () => {
+      const swichFocusTo = document.getElementById(current + NUM_DAYS_IN_ROW);
+
+      if (!swichFocusTo) return;
+
+      swichFocusTo.focus();
+    },
+    up: () => {
+      const swichFocusTo = document.getElementById(current - NUM_DAYS_IN_ROW);
+      if (!swichFocusTo) return;
+      swichFocusTo.focus();
+    },
+    left: () => {
+      const swichFocusTo = document.getElementById(current - 1);
+      if (!swichFocusTo) return;
+      swichFocusTo.focus();
+    },
+    right: () => {
+      const swichFocusTo = document.getElementById(current + 1);
+      if (!swichFocusTo) return;
+      swichFocusTo.focus();
+    },
+  };
+}

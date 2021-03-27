@@ -1,24 +1,8 @@
 .homeMain {
-  min-height: calc(100vh - 6rem);
+  min-height: calc(100vh - 8rem);
   display: grid;
   align-content: space-around;
   padding: 0rem 0rem;
-  position: absolute;
-  top: 4rem;
+  margin: 2rem 0rem;
   width: 100%;
 }
-
-// .skipLink {
-//   position: absolute;
-//  transform: translateY(-100vh);
-//  transition: transform 0.2s ease-out;
-//  line-height: 2rem;
-//  color: var(--white);
-//  text-decoration-color: var(--white);
-// }
-
-// .skipLink:focus {
-//  transform: translateY(0%);
-//  position: relative;
- 
-// }

@@ -1,7 +1,7 @@
 .layout {
   display: grid;
-  min-height: 100vh;
-  overflow: hidden;
+  // min-height: 100vh;
+  // overflow: hidden;
  
   header {
     padding: 1rem 2rem;
@@ -21,10 +21,10 @@
     justify-content: center;
     font-size: var(--small);
     font-weight: 700;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    // position: absolute;
+    // bottom: 0;
+    // left: 0;
+    // width: 100%;
   }
   .skipLink {
      position: absolute;

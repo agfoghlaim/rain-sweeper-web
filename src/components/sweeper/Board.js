@@ -11,8 +11,9 @@ import {
   prepData,
   shouldCheckInThisDirection,
   getNeighbourToThe,
-  setCheckedToTrue,
   checkGameOver,
+  handleKeyboard,
+  setTheFocus,
   setCulprit,
 } from '../../util';
 
@@ -27,8 +28,9 @@ import { NUM_DAYS_IN_ROW, NUM_DAYS_IN_GAME, DIRECTIONS } from '../../consts';
 import gameReducer from '../../reducers/gameReducer';
 
 export default function Board() {
-  // There are way more wet days so to make game winnable get wet/dry days in a nice proportion.
 
+  /* There are way more wet days so to make game winnable get wet/dry days in a nice proportion.
+  */
   const winnable = useStaticQuery(
     graphql`
       query winnableQuery {
@@ -52,11 +54,9 @@ export default function Board() {
     `
   );
 
-  /**
-   *
-   * When a <Dry> day is clicked, it's tricky to check neighbouring days and manage re-renders. Push all neighbours to be checked/revealed in here and update state all at once.
-   *
-   */
+  /*
+   When a <Dry> day is clicked, it's tricky to check neighbouring days and manage re-renders. Push all neighbours to be checked/revealed in here and update state all at once.
+  */
   const KEEP_TRACK = [];
 
   const initialState = {
@@ -67,6 +67,7 @@ export default function Board() {
     culprit: null,
     allData: [], // all data shuffled & with numNastyNeighbours- ratio is 1:5 wet:dry
     data: [], // game data, .length === NUM_DAYS_IN_GAME
+    numWet
   };
 
   const [realData, dispatch] = useReducer(gameReducer, initialState);
@@ -74,60 +75,57 @@ export default function Board() {
   const [gameOver, setGameOver] = useState(true);
   const [numLives, setNumLives] = useState(3); // it's reset anyway...
   const [win, setWin] = useState(undefined);
-  const [renderingTiles, setRenderingTiles] = useState(false);
   const [showSplash, setShowSplash] = useState(false);
+
+
   const splashTimer = useRef(null);
-  const firstTileRef = useRef(null);
+  const { numWet } = realData;
+  const go = useCallback(
+    async function load() {
+      try {
+        const allData = await prepData(winnable);
+        dispatch({ type: 'SET_FETCHED_DATA', error: '', payload: allData });
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: 'FETCH_ERROR', error: 'Error fetching data' });
+      }
+    },
+    [winnable]
+  );
 
-  const [numWet, setNumWet] = useState(null);
-  // const skipRef = useRef(null);
-  const go = useCallback(async function load() {
-    try {
-      const allData = await prepData(winnable);
-      dispatch({ type: 'FETCH', error: '', payload: allData });
-    } catch (err) {
-      console.log(err);
-      dispatch({ type: 'FETCH_ERROR', error: 'Error fetching data' });
-    }
-  }, []);
-
-  // Fetch data manually. In the case of no internet when the app loads, this can be called from the error component.
+  // Allow for fetching data manually. In the case of no internet when the app loads, this can be called from the error component.
   function tryAgain() {
     dispatch({ type: 'FETCHING', error: '', loading: true });
     go();
   }
+
   // #region useEffect
 
   // Fetch data on load
   useEffect(() => {
     dispatch({ type: 'FETCHING', error: '', loading: true });
     go();
-  }, []);
+  }, [go]);
 
-  // Shuffle when newGame changes.
+  // New Game
   useEffect(() => {
     if (!newGame) return;
-    setGameOver(false); // okay?
+
+    setGameOver(false);
     setWin(false);
 
-    dispatch({ type: 'SHUFFLE', payload: realData.allData });
+    dispatch({ type: 'SHUFFLE'});
+    dispatch({ type: 'CALC_WET_DAYS' });
 
     setNewGame(false);
   }, [newGame, setWin]);
 
-  // Get num wet days for score when newGame changes.
-  useEffect(() => {
-    const wetDays = realData.data.filter((item) => item.rain > 0);
-    if (wetDays) {
-      setNumWet(wetDays.length);
-    }
-  }, [newGame, setNumWet, realData.data]);
 
   // timeout to hide splash set in handle LOSE game
   useEffect(() => {
     if (!showSplash || win) return;
 
-    // Remove you lost splash after 2 seconds.
+    // Remove you lost splash after 3 seconds.
     splashTimer.current = setTimeout(() => setShowSplash(false), 3000);
 
     // Clean up setTimeout.
@@ -137,51 +135,30 @@ export default function Board() {
         splashTimer.current = null;
       }
     };
-  }, [showSplash, setShowSplash, splashTimer.current]);
+  }, [showSplash, setShowSplash, win]);
 
-  // Handle roll everytime a game ends.
+  // End of Round
   useEffect(() => {
     if (!gameOver) return;
 
-    // Add the number of wet days avoided in this round to the total score
-    // DOING...
-    const currentScore = Number(realData.score);
-    const updateScore = currentScore + numWet * 10; // more exciting.
+    // Update score.
+    dispatch({ type: 'SCORE', numWet });
 
-    if (isNaN(updateScore)) return;
-    dispatch({ type: 'SCORE', payload: updateScore });
-
-    // Game is lost, reset roll & score to 0, numLives to 3.
+    // Game is lost, reset roll & score to 0, numLives to 3. TODO not score!!
     if (gameOver && !win) {
-      dispatch({ type: 'ROLL', payload: 0 });
-      dispatch({ type: 'SCORE', payload: 0 });
+      dispatch({ type: 'RESET_ROLL' });
+      dispatch({ type: 'RESET SCORE' }); // TODO: this shouldn't happen until newgame pressed
       setNumLives(3);
     }
 
     // Game is won.
     if (gameOver && win) {
+
       // 1. Increment roll
-      const roll = realData.roll;
-      dispatch({ type: 'ROLL', payload: roll + 1 });
+      dispatch({ type: 'INCREMENT_ROLL' });
 
-      //  2. Show 'X in a row' splash.
+      //  2. Show 'between rounds' splash.
       setShowSplash(true);
-
-      // 3. Set timesout to remove splash.
-      // splashTimer.current = setTimeout(() => {
-      //   setShowSplash(false);
-      // }, 1500);
-
-      // 4. get one spare umbrella on fifth round
-      if (roll === 4) {
-        let currentLives = numLives;
-        setNumLives(currentLives + 1);
-
-        // 5. get two spare umbrellas every 10 rounds.
-      } else if (roll > 0 && roll % 9 === 0) {
-        let currentLives = numLives;
-        setNumLives(currentLives + 2);
-      }
 
       // Clean up timeout.
       return function cleanup() {
@@ -190,15 +167,27 @@ export default function Board() {
         }
       };
     }
-  }, [win, gameOver]);
+  }, [win, gameOver, numLives, numWet]);
+
+  // when round changes, handle numLives
+  useEffect(() => {
+    if (realData.roll === 5) {
+      let currentLives = numLives;
+      setNumLives(currentLives + 1);
+
+      // 5. get two spare umbrellas every 10 rounds.
+    } else if (realData.roll > 0 && realData.roll % 9 === 0) {
+      let currentLives = numLives;
+      setNumLives(currentLives + 2);
+    }
+  }, [realData.roll, numLives]);
 
   // Reveal all tiles on game over.
   useEffect(() => {
     if (!gameOver) return;
-
+    
     // Reveal all tiles by setting all realData.data.checked = true.
-    const revealed = setCheckedToTrue(realData.data);
-    dispatch({ type: 'REVEAL_ALL', payload: revealed });
+    dispatch({ type: 'REVEAL_ALL' });
   }, [gameOver]);
 
   // Check if game should be over. This is for successful scenario. <Wet/> sets setGame(false) if a rainy day is clicked.
@@ -216,50 +205,6 @@ export default function Board() {
   //#endregion
 
   //#region handlers
-
-  function handleKeyboard(_, e) {
-    e.preventDefault();
-    if (e.key === 'ArrowDown') {
-      setTheFocus(+document.activeElement.id).down();
-    }
-    if (e.key === 'ArrowUp') {
-      setTheFocus(+document.activeElement.id).up();
-    }
-    if (e.key === 'ArrowRight') {
-      setTheFocus(+document.activeElement.id).right();
-    }
-    if (e.key === 'ArrowLeft') {
-      setTheFocus(+document.activeElement.id).left();
-    }
-  }
-
-  function setTheFocus(current) {
-    return {
-      down: () => {
-        const swichFocusTo = document.getElementById(current + NUM_DAYS_IN_ROW);
-
-        if (!swichFocusTo) return;
-
-        swichFocusTo.focus();
-      },
-      up: () => {
-        const swichFocusTo = document.getElementById(current - NUM_DAYS_IN_ROW);
-        if (!swichFocusTo) return;
-        swichFocusTo.focus();
-      },
-      left: () => {
-        const swichFocusTo = document.getElementById(current - 1);
-        if (!swichFocusTo) return;
-        swichFocusTo.focus();
-      },
-      right: () => {
-        const swichFocusTo = document.getElementById(current + 1);
-        if (!swichFocusTo) return;
-        swichFocusTo.focus();
-      },
-    };
-  }
-
   function handleWetClick(data) {
     setGameOver(true);
 
@@ -334,7 +279,6 @@ export default function Board() {
     }
   }
   //#endregion handlers
-
   function renderTiles(empty) {
     const data = realData.data.slice(0, NUM_DAYS_IN_GAME);
 
@@ -390,7 +334,6 @@ export default function Board() {
 
       <div
         tabIndex="0"
-        // ref={skipRef}
         className={classes.tileGrid}
         style={{ gridTemplateColumns: `repeat(${NUM_DAYS_IN_ROW}, 3.6rem)` }}
       >

@@ -46,6 +46,7 @@ export default function DryTile({
       return;
     }
     if (e.key === 'Enter') {
+      if (flagged) return;
       handleDryClick(itemData);
     }
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
@@ -57,6 +58,7 @@ export default function DryTile({
 
   return (
     <div
+      role="button"
       style={{
         backgroundColor: checked ? `var(--gray)` : `var(--white)`,
       }}
@@ -92,6 +94,8 @@ export default function DryTile({
             alignSelf: 'center',
             justifySelf: 'center',
           }}
+          role="img"
+          aria-label="questionmark"
         >
           ❔
         </span>

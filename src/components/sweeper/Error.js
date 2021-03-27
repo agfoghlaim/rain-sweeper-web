@@ -3,7 +3,7 @@ import React from 'react';
 export default function Error({ msg, tryAgain }) {
   return (
     <div style={styles.loadingWrap}>
-      <span style={styles.emoji}>🤔</span>
+      <span role="img" aria-label="thinking emoji" style={styles.emoji}>🤔</span>
       <span style={styles.text}>{msg}...</span>
       <div style={styles.tryAgainBtn}>
         <button

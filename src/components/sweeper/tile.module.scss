@@ -32,17 +32,14 @@
   padding: 0.1rem;
   position: relative;
   border: 1px outset var(--white);
-}
-.tile:focus {
-  // outline: none;
-  // border: 2px solid var(--red);
+  cursor: pointer;
 }
 
-// Remove browser default outline so there's no focus when using mouse.
-.tile:focus {
- outline: none;
+// Mostly Remove browser default outline so there's no focus when using mouse.
+// Keep browser default for the first tile only
+.tile:not(:first-of-type) {
+  outline: none;
 }
-
 // For keyboard focus, use border.
 .tile:focus-visible {
   border: 2px solid var(--lightBlack);

@@ -90,10 +90,10 @@ h5,
 
 small,
 .text_small {
-  font-size: --small;
+  font-size: var(--small);
 }
 
 .text_smaller {
-  font-size: --small;
+  font-size: var(--smaller);
 }
 
