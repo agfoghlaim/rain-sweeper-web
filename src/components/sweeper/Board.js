@@ -67,19 +67,20 @@ export default function Board() {
     culprit: null,
     allData: [], // all data shuffled & with numNastyNeighbours- ratio is 1:5 wet:dry
     data: [], // game data, .length === NUM_DAYS_IN_GAME
-    numWet
+    numWet: undefined,
+    numLives: 3
   };
 
   const [realData, dispatch] = useReducer(gameReducer, initialState);
   const [newGame, setNewGame] = useState(undefined);
   const [gameOver, setGameOver] = useState(true);
-  const [numLives, setNumLives] = useState(3); // it's reset anyway...
+  //const [numLives, setNumLives] = useState(3); // it's reset anyway...
   const [win, setWin] = useState(undefined);
   const [showSplash, setShowSplash] = useState(false);
 
 
   const splashTimer = useRef(null);
-  const { numWet } = realData;
+  const { numWet, numLives } = realData;
   const go = useCallback(
     async function load() {
       try {
@@ -148,7 +149,8 @@ export default function Board() {
     if (gameOver && !win) {
       dispatch({ type: 'RESET_ROLL' });
       dispatch({ type: 'RESET SCORE' }); // TODO: this shouldn't happen until newgame pressed
-      setNumLives(3);
+      //setNumLives(3);
+      dispatch({type: 'NUM_LIVES', payload: 3})
     }
 
     // Game is won.
@@ -173,12 +175,14 @@ export default function Board() {
   useEffect(() => {
     if (realData.roll === 5) {
       let currentLives = numLives;
-      setNumLives(currentLives + 1);
+      //setNumLives(currentLives + 1);
+      dispatch({type: 'NUM_LIVES', payload: currentLives + 1})
 
       // 5. get two spare umbrellas every 10 rounds.
     } else if (realData.roll > 0 && realData.roll % 9 === 0) {
       let currentLives = numLives;
-      setNumLives(currentLives + 2);
+      //setNumLives(currentLives + 2);
+      dispatch({type: 'NUM_LIVES', payload: currentLives + 2})
     }
   }, [realData.roll, numLives]);
 
@@ -292,7 +296,8 @@ export default function Board() {
           handleDryClick={handleDryClick}
           gameOver={gameOver}
           numLives={numLives}
-          setNumLives={setNumLives}
+          setNumLives = { (maybe) => dispatch({type: 'NUM_LIVES', payload: maybe}) }
+          // setNumLives={setNumLives}
           setTheFocus={setTheFocus}
           handleKeyboard={handleKeyboard}
         />

@@ -9,7 +9,7 @@ export default function WetTile({
   handleWetClick,
   gameOver,
   numLives,
-  setNumLives,
+   setNumLives,
   classes,
   handleKeyboard,
   empty,

@@ -105,6 +105,13 @@ export default function gameReducer(state, action) {
         ...state,
         data: revealed
       };
+    case 'NUM_LIVES':
+
+      return {
+        ...state,
+        numLives: action.payload
+      
+      };
 
     default:
       return { ...state };
