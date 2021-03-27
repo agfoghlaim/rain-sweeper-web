@@ -1,0 +1,31 @@
+.gameDetsWrap {
+  font-family: monospace;
+  margin: 1rem 3rem 1rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  justify-content: flex-start;
+  grid-gap: 1rem;
+
+  .infoItem {
+    margin-right: 1rem;
+    background: var(--lightBlack);
+    padding: 0.2rem 0.2rem;
+    border-radius: 0.2rem;
+    display: grid;
+    grid-auto-flow: column;
+		align-items: center;
+    align-content: center;
+    .text {
+      color: var(--white);
+      font-size: 10px;
+    }
+    .emoji {
+      color: var(--white);
+      font-size: var(--small);
+    }
+    .emojiStrike {
+      text-decoration: var(--red) wavy line-through;
+      text-decoration-thickness: 0.2rem;
+    }
+  }
+}

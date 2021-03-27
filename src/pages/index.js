@@ -1,14 +1,17 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import classes from './index.module.scss';
+
 import SEO from '../components/SEO';
 import Board from '../components/sweeper/Board';
-import classes from './index.module.scss';
+import GameDets from '../components/gameDets/GameDets';
 
 function IndexPage({ data }) {
   return (
     <>
       <SEO pageTitle="Home" />
       <main className={classes.homeMain}>
+        <GameDets />
         <Board />
       </main>
     </>

@@ -1,0 +1,16 @@
+.aboutMain {
+	padding: 1rem 3rem;
+	display: grid;
+	justify-content: center;
+	align-self: flex-start;
+	align-content: center;
+	grid-gap:1rem;
+	min-height: calc( 100vh - 4rem);
+	p {
+		max-width: 50rem;
+	}
+	h1 {
+		color: var(--white);
+
+	}
+}

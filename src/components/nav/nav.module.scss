@@ -3,18 +3,33 @@
   display: grid;
   align-items: center;
 
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     align-content: center;
+    grid-gap: 2rem;
     justify-content: space-between;
+  
     li {
       a {
         text-decoration: none;
         color: var(--white);
-        font-size: var(--h5);
+        font-size: var(--h6);
+        transition: color 0.2s ease-out;
+        &:hover, &:focus {
+          color: var(--yellow);
+        }
+      }
+      a[aria-current=page]{
+        text-decoration: underline;
+        text-decoration-thickness: 0.15rem;
+        text-underline-offset: 0.2rem;
+        color: var(--yellow);
+      
       }
     }
   }
