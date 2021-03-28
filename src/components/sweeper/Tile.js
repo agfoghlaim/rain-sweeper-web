@@ -24,12 +24,13 @@ export default function Tile({
   }, [gameOver, flagged]);
 
   // Focus the first tile when a new game loads.
-  // TODO: eslint is warning about this...
   useEffect(() => {
+    if(empty) return;
+    
     if (firstTileRef.current) {
       firstTileRef.current.focus();
     }
-  }, []);
+  }, [empty]);
 
 
   return data.rain === 0 ? (
