@@ -9,7 +9,7 @@ export default function WetTile({
   handleWetClick,
   gameOver,
   numLives,
-   setNumLives,
+  setNumLives,
   classes,
   handleKeyboard,
   empty,
@@ -63,6 +63,7 @@ export default function WetTile({
       // if there are lives (umbrellas) left, decrement, flag & return.
       let currentLives = numLives;
       if (currentLives > 0) {
+        console.log("wet num lives")
         const update = currentLives - 1;
         setNumLives(update);
         setFlagged(true);
@@ -81,7 +82,7 @@ export default function WetTile({
   return (
     <div
       style={{
-        backgroundColor: culprit ? 'var(--red)' : 'var(--red)',
+        backgroundColor: culprit ? 'var(--red)' : 'var(--blue)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
@@ -98,7 +99,11 @@ export default function WetTile({
         <>
           <span className={classes.date}>{date}</span>
           {flagged && !gameOver && <Umbrella />}
-          {gameOver && <span role="img" aria-label="cloud with rain">🌧️</span>}
+          {gameOver && (
+            <span role="img" aria-label="cloud with rain">
+              🌧️
+            </span>
+          )}
         </>
       ) : (
         <span

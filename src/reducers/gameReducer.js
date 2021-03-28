@@ -3,13 +3,12 @@ import {
   addNumNastyNeighboursToShuffledData,
   setCheckedToFalse,
   sliceNumDaysInAGameConst,
-  setCheckedToTrue
+  setCheckedToTrue,
 } from '../util';
 
 export default function gameReducer(state, action) {
   switch (action.type) {
     case 'SET_FETCHED_DATA':
-
       return {
         loading: false,
         error: '',
@@ -17,7 +16,7 @@ export default function gameReducer(state, action) {
         data: action.payload.gameData,
         allData: action.payload.allData,
         score: 0,
-        numWet: 0
+        numWet: 0,
       };
     case 'FETCH_ERROR':
       return {
@@ -37,18 +36,16 @@ export default function gameReducer(state, action) {
         roll: 0,
       };
     case 'CALC_WET_DAYS':
-
       const wetDays = state.data.filter((item) => item.rain > 0);
 
       return {
         ...state,
-        numWet: wetDays.length || 0
+        numWet: wetDays.length || 0,
       };
     case 'INCREMENT_ROLL':
-
       return {
         ...state,
-        roll: state.roll +1,
+        roll: state.roll + 1,
       };
 
     case 'RESET SCORE':
@@ -61,7 +58,7 @@ export default function gameReducer(state, action) {
       const updateScore = currentScore + action.numWet * 10; // more exciting.
       return {
         ...state,
-        score:updateScore,
+        score: updateScore,
       };
     case 'CULPRIT':
       return {
@@ -69,7 +66,6 @@ export default function gameReducer(state, action) {
         culprit: action.payload,
       };
     case 'SHUFFLE':
-    
       // payload is allData, do the following 4 things to it & return some gameData.
       // const { payload } = action;
       const gameData = [
@@ -99,18 +95,31 @@ export default function gameReducer(state, action) {
         data: action.payload,
       };
     case 'REVEAL_ALL':
-      console.log("reducer")
       const revealed = setCheckedToTrue(state.data);
       return {
         ...state,
-        data: revealed
+        data: revealed,
       };
     case 'NUM_LIVES':
-
       return {
         ...state,
-        numLives: action.payload
-      
+        numLives: action.payload,
+      };
+    case 'UPDATE_NUM_LIVES':
+      function calcNumLives() {
+        if (state.roll === 4) {
+          return 1;
+        } else if (state.roll > 0 && state.roll % 9 === 0) {
+          return 2;
+        }else{
+          return 0;
+        }
+      }
+      const inc= calcNumLives();
+   
+      return {
+        ...state,
+        numLives: state.numLives + inc,
       };
 
     default:

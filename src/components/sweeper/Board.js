@@ -28,9 +28,8 @@ import { NUM_DAYS_IN_ROW, NUM_DAYS_IN_GAME, DIRECTIONS } from '../../consts';
 import gameReducer from '../../reducers/gameReducer';
 
 export default function Board() {
-
   /* There are way more wet days so to make game winnable get wet/dry days in a nice proportion.
-  */
+   */
   const winnable = useStaticQuery(
     graphql`
       query winnableQuery {
@@ -68,16 +67,15 @@ export default function Board() {
     allData: [], // all data shuffled & with numNastyNeighbours- ratio is 1:5 wet:dry
     data: [], // game data, .length === NUM_DAYS_IN_GAME
     numWet: undefined,
-    numLives: 3
+    numLives: 3,
   };
 
   const [realData, dispatch] = useReducer(gameReducer, initialState);
   const [newGame, setNewGame] = useState(undefined);
   const [gameOver, setGameOver] = useState(true);
-  //const [numLives, setNumLives] = useState(3); // it's reset anyway...
   const [win, setWin] = useState(undefined);
   const [showSplash, setShowSplash] = useState(false);
-
+  const [betweenRounds, setBetweenRounds] = useState(false);
 
   const splashTimer = useRef(null);
   const { numWet, numLives } = realData;
@@ -94,7 +92,7 @@ export default function Board() {
     [winnable]
   );
 
-  // Allow for fetching data manually. In the case of no internet when the app loads, this can be called from the error component.
+  // Allow for fetching data manually. In the case of no internet when the app loads, this can be called from the error component. TODO, don't need this for gatsby version.
   function tryAgain() {
     dispatch({ type: 'FETCHING', error: '', loading: true });
     go();
@@ -108,19 +106,29 @@ export default function Board() {
     go();
   }, [go]);
 
-  // New Game
+  // Starting new round (or new Game)
   useEffect(() => {
     if (!newGame) return;
-
     setGameOver(false);
     setWin(false);
-
-    dispatch({ type: 'SHUFFLE'});
+    dispatch({ type: 'SHUFFLE' });
     dispatch({ type: 'CALC_WET_DAYS' });
-
     setNewGame(false);
   }, [newGame, setWin]);
 
+  // Starting New Game (not just new round)
+  useEffect(() => {
+    /*
+    win === undefined means first round
+    win === true means new round
+    win === false means new Game/new round
+    */
+    if (!newGame) return;
+    if (win) return;
+    dispatch({ type: 'RESET_ROLL' });
+    dispatch({ type: 'RESET SCORE' });
+    dispatch({ type: 'NUM_LIVES', payload: 3 });
+  }, [newGame, setWin, win]);
 
   // timeout to hide splash set in handle LOSE game
   useEffect(() => {
@@ -138,58 +146,39 @@ export default function Board() {
     };
   }, [showSplash, setShowSplash, win]);
 
-  // End of Round
+  // Between Rounds.
   useEffect(() => {
+    if (!betweenRounds) return;
     if (!gameOver) return;
+    if (!win) return;
 
-    // Update score.
+    // 1. Update numLives (for round 5 & %10 === 0)
+    dispatch({ type: 'UPDATE_NUM_LIVES' });
+
+    // 2. Increment round.
+    dispatch({ type: 'INCREMENT_ROLL' });
+
+    // 3. Increment score.
     dispatch({ type: 'SCORE', numWet });
 
-    // Game is lost, reset roll & score to 0, numLives to 3. TODO not score!!
-    if (gameOver && !win) {
-      dispatch({ type: 'RESET_ROLL' });
-      dispatch({ type: 'RESET SCORE' }); // TODO: this shouldn't happen until newgame pressed
-      //setNumLives(3);
-      dispatch({type: 'NUM_LIVES', payload: 3})
-    }
+    // 4. Show 'between rounds' splash.
+    setShowSplash(true);
 
-    // Game is won.
-    if (gameOver && win) {
+    // 5. Stop this from happening more than once between every round.
+    setBetweenRounds(false);
 
-      // 1. Increment roll
-      dispatch({ type: 'INCREMENT_ROLL' });
-
-      //  2. Show 'between rounds' splash.
-      setShowSplash(true);
-
-      // Clean up timeout.
-      return function cleanup() {
-        if (splashTimer.current) {
-          clearTimeout(splashTimer.current);
-        }
-      };
-    }
-  }, [win, gameOver, numLives, numWet]);
-
-  // when round changes, handle numLives
-  useEffect(() => {
-    if (realData.roll === 5) {
-      let currentLives = numLives;
-      //setNumLives(currentLives + 1);
-      dispatch({type: 'NUM_LIVES', payload: currentLives + 1})
-
-      // 5. get two spare umbrellas every 10 rounds.
-    } else if (realData.roll > 0 && realData.roll % 9 === 0) {
-      let currentLives = numLives;
-      //setNumLives(currentLives + 2);
-      dispatch({type: 'NUM_LIVES', payload: currentLives + 2})
-    }
-  }, [realData.roll, numLives]);
+    // Clean up timeout.
+    return function cleanup() {
+      if (splashTimer.current) {
+        clearTimeout(splashTimer.current);
+      }
+    };
+  }, [betweenRounds, gameOver, win, setShowSplash, setBetweenRounds, numWet]);
 
   // Reveal all tiles on game over.
   useEffect(() => {
     if (!gameOver) return;
-    
+
     // Reveal all tiles by setting all realData.data.checked = true.
     dispatch({ type: 'REVEAL_ALL' });
   }, [gameOver]);
@@ -203,6 +192,7 @@ export default function Board() {
     if (isGameOver) {
       setGameOver(true);
       setWin(true);
+      setBetweenRounds(true);
     }
   }, [setGameOver, gameOver, realData.data, setWin]);
 
@@ -210,16 +200,18 @@ export default function Board() {
 
   //#region handlers
   function handleWetClick(data) {
+
+    // This function only gets called when numLives === 0 so setGameOver immediately.
     setGameOver(true);
 
     // Set which day done it.
     const badDay = data.id;
-
-    // Map data and add a .culprit = true to the day that lost the game.
-    const updated = setCulprit(realData.data, badDay);
-
+    
     // Show splash. 'Game Over' splash will show because win has not been set to true.
     setShowSplash(true);
+    
+    // Map data and add a .culprit = true to the day that lost the game.
+    const updated = setCulprit(realData.data, badDay);
 
     // Update state. Set realData.data[badDay].culprit = true.
     dispatch({ type: 'CHECK_TILE', payload: updated });
@@ -296,8 +288,7 @@ export default function Board() {
           handleDryClick={handleDryClick}
           gameOver={gameOver}
           numLives={numLives}
-          setNumLives = { (maybe) => dispatch({type: 'NUM_LIVES', payload: maybe}) }
-          // setNumLives={setNumLives}
+          setNumLives={(pay) => dispatch({ type: 'NUM_LIVES', payload: pay })}
           setTheFocus={setTheFocus}
           handleKeyboard={handleKeyboard}
         />
