@@ -9,13 +9,13 @@
   min-height: calc(3.6rem * 8);
   justify-self: center;
   padding: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
 }
 .tileGrid {
   display: grid;
   place-content: center;
   padding: 0.5rem;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   background: var(--grey);
   grid-auto-rows: 3.6rem;
   grid-gap: 0.25rem;

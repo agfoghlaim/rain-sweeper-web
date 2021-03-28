@@ -80,15 +80,13 @@ export default function WetTile({
   }
 
   return (
-    <div
+    <button
       style={{
         backgroundColor: culprit ? 'var(--red)' : 'var(--blue)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 ? '0' : '-1'}
       className={`${classes.tile}`}
-      role="button"
-      // ref will be null unless itemData.id === 0
       ref={firstTileRef}
       onClick={localHandlePress}
       onContextMenu={localHandlePress}
@@ -118,6 +116,6 @@ export default function WetTile({
           ❔
         </span>
       )}
-    </div>
+    </button>
   );
 }

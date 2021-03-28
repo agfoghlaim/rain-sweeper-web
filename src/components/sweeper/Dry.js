@@ -57,8 +57,7 @@ export default function DryTile({
 
 
   return (
-    <div
-      role="button"
+    <button
       style={{
         backgroundColor: checked ? `var(--gray)` : `var(--white)`,
       }}
@@ -100,6 +99,6 @@ export default function DryTile({
           ❔
         </span>
       )}
-    </div>
+    </button>
   );
 }

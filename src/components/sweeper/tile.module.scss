@@ -9,7 +9,7 @@
   border: 0.1rem solid white;
   border-style: inset;
   background: var(--gray);
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   transition: none;
   box-shadow: none;
 }
@@ -19,11 +19,11 @@
   height: 1.2rem;
   display: grid;
   place-content: center;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   display: grid;
 }
 .tile {
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   display: grid;
   justify-content: center;
   justify-items: center;
@@ -31,10 +31,13 @@
   transition: all 0.15s ease-out;
   padding: 0.1rem;
   position: relative;
-  border: 1px outset var(--white);
+  border: 2px outset var(--white);
   cursor: pointer;
 }
 
+// button.tile {
+//   border-radius:  0.3rem;
+// }
 // Mostly Remove browser default outline so there's no focus when using mouse.
 // Keep browser default for the first tile only
 .tile:not(:first-of-type) {
@@ -44,7 +47,14 @@
 .tile:focus-visible {
   border: 2px solid var(--lightBlack);
 }
-
+.tile:hover {
+  outline: none;
+  border: 2px outset var(--gray);
+}
+.tile.checked:hover {
+  outline: none;
+  border: 2px inset var(--white);
+}
 .tile.checked {
   box-shadow: none;
   border-style: inset;
