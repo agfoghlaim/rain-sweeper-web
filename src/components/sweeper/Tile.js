@@ -26,7 +26,6 @@ export default function Tile({
   // Focus the first tile when a new game loads.
   useEffect(() => {
     if(empty) return;
-    
     if (firstTileRef.current) {
       firstTileRef.current.focus();
     }

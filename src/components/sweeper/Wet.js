@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { NUM_DAYS_IN_GAME } from '../../consts';
 import Umbrella from './Umbrella';
 
 export default function WetTile({
@@ -47,23 +47,23 @@ export default function WetTile({
   }
 
   function localHandleKeyboard(e) {
+    // don't mess with tab.
+    if(e.key === 'Tab') return;
+
     e.preventDefault();
-    if (e.key === 'Escape') {
-      document.activeElement.parentElement.focus();
-    }
 
     if (e.keyCode === 32) {
       // space
       setFlagged(!flagged);
       return;
     }
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' ) {
       if (flagged) return;
 
       // if there are lives (umbrellas) left, decrement, flag & return.
       let currentLives = numLives;
       if (currentLives > 0) {
-        console.log("wet num lives")
+    
         const update = currentLives - 1;
         setNumLives(update);
         setFlagged(true);
@@ -85,7 +85,7 @@ export default function WetTile({
         backgroundColor: culprit ? 'var(--red)' : 'var(--blue)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
-      tabIndex={itemData.id === 0 ? '0' : '-1'}
+      tabIndex={itemData.id === 0 || itemData.id === NUM_DAYS_IN_GAME - 1 ? '0' : '-1'}
       className={`${classes.tile}`}
       ref={firstTileRef}
       onClick={localHandlePress}

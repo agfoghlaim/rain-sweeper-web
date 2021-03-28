@@ -329,7 +329,7 @@ export default function Board() {
       />
 
       <div
-        tabIndex="0"
+        // tabIndex="0"
         className={classes.tileGrid}
         style={{ gridTemplateColumns: `repeat(${NUM_DAYS_IN_ROW}, 3.6rem)` }}
       >

@@ -1,4 +1,5 @@
 import React from 'react';
+import { NUM_DAYS_IN_GAME } from '../../consts';
 
 import Nasties from './Nasties';
 import Umbrella from './Umbrella';
@@ -37,10 +38,12 @@ export default function DryTile({
   }
 
   function localHandleKeyboard(e) {
+
+    // don't mess with tab.
+    if(e.key === 'Tab') return;
+
     e.preventDefault();
-    if (e.key === 'Escape') {
-      document.activeElement.parentElement.focus();
-    }
+
     if (e.keyCode === 32) {
       setFlagged(!flagged);
       return;
@@ -66,7 +69,7 @@ export default function DryTile({
       // ref will be null unless itemData.id === 0
       ref={firstTileRef}
       onContextMenu={localHandlePress}
-      tabIndex={itemData.id === 0 ? '0' : '-1'}
+      tabIndex={itemData.id === 0 || itemData.id === NUM_DAYS_IN_GAME - 1 ? '0' : '-1'}
       className={`${classes.tile} ${
         itemData.checked ? classes['checked'] : ''
       }`}

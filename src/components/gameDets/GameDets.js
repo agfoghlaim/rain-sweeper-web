@@ -11,9 +11,7 @@ export default function GameDets() {
       <div className={classes.infoItem}>
         <span className={classes.text}>spacebar or right click to add/remove umbrellas</span>
       </div>
-      <div className={classes.infoItem}>
-        <span className={classes.text}>esc moves focus out of game</span>
-      </div>
+
       <div className={classes.infoItem}>
 			<span className={classes.text}>enter reveals tiles</span>
       </div>
