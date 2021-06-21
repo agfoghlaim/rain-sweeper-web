@@ -32,6 +32,13 @@
       
       }
     }
+    .appLink {
+      a {
+        color: var(--lightPurple);
+        position: absolute;
+        right: 3rem;
+      }
+    }
   }
 }
 

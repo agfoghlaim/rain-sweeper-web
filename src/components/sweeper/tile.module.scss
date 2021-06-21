@@ -3,6 +3,13 @@
   color: var(--lightBlack);
   font-weight: 700;
   letter-spacing: -0.8px;
+  &::-moz-selection {
+    background-color: transparent;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
 }
 
 .checked {
@@ -21,6 +28,13 @@
   place-content: center;
   border-radius: 0.3rem;
   display: grid;
+  &::-moz-selection {
+    background-color: transparent;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
 }
 .tile {
   border-radius: 0.3rem;

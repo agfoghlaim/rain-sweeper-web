@@ -8,6 +8,14 @@
 	min-height: calc( 100vh - 6rem);
 	p {
 		max-width: 50rem;
+		a {
+			text-decoration: underline;
+			background: var(--white);
+			cursor: pointer;
+			font-weight: 800;
+			// border-radius: 0.2rem;
+	
+		}
 	}
 	h1 {
 		color: var(--white);

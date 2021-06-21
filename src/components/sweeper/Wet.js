@@ -82,7 +82,7 @@ export default function WetTile({
   return (
     <button
       style={{
-        backgroundColor: culprit ? 'var(--red)' : 'var(--blue)',
+        backgroundColor: culprit ? 'var(--red)' : 'var(--white)',
         //background: `${itemData.checked ? 'none' : colors.white}`,
       }}
       tabIndex={itemData.id === 0 || itemData.id === NUM_DAYS_IN_GAME - 1 ? '0' : '-1'}
