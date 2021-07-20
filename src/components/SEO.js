@@ -24,11 +24,10 @@ export default function SEO({
       <html lang="en" />
       <title>{pageTitle}</title>
 
-      {/* not sure the svg is ever showing */}
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternative icon" href="/favicon.ico" />
 
-      <meta name="viewport" content="width=device-width, initial-scle=1.0" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta charSet="utf-8" />
       <meta name="description" content={site.siteMetadata.description} />
       {location && <meta property="ob:url" content={location.href} />}
@@ -41,9 +40,7 @@ export default function SEO({
       />
       <meta property="og:description" content={description} key="ogdesc" />
       {children}
-      {/* children is so we can use eg. <SEO>
-        <title>some override</title>
-      </SEO> */}
+
     </Helmet>
   );
 }

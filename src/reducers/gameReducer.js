@@ -7,7 +7,6 @@ import {
 } from '../util';
 
 export default function gameReducer(state, action) {
-  console.log(action.payload)
   switch (action.type) {
     case 'SET_FETCHED_DATA':
       return {
